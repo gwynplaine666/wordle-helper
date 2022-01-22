@@ -1,6 +1,7 @@
 <script>
 	import Alphabet from '../components/Alphabet.svelte';
 	import alphabet from '$lib/alphabet.js';
+	import Button from "../components/Button.svelte";
  	let selectedRightWords = [];
 	let selectedWrongWords = [];
 
@@ -17,6 +18,11 @@
 			return;
 		}
 		selectedWrongWords = [...selectedWrongWords, event.detail]
+	}
+
+	const resetWords = () => {
+		selectedRightWords = []
+		selectedWrongWords = []
 	}
 
 	$: otherWords = alphabet.RU.filter(i => !selectedRightWords.includes(i)).filter(i => !selectedWrongWords.includes(i))
@@ -40,6 +46,7 @@
 		{#if otherWords.length}Неизвестные буквы:<span class='unknown-word'>{otherWords.join(", ")}</span>{/if}
 	</div>
 </div>
+	<Button class="reset-button" onClick={resetWords}>Сбросить</Button>
 </div>
 <style>
 		.Container {
@@ -48,7 +55,7 @@
 				/*justify-content: center;*/
 		}
 	.Words-buttons {
-      padding: 20px 20px 0;
+      padding: 20px 0 0;
 			font-family: Comic Sans MS,serif;
 			display: grid;
 			grid-template-columns: 33% 33%;
@@ -56,7 +63,7 @@
 			justify-content: space-between;
   }
 	.Result {
-      padding: 20px 20px 0;
+      padding: 20px 0;
       font-family: Comic Sans MS,serif;
 			color: white;
 			font-size: 1.3em;
@@ -69,5 +76,8 @@
 	}
 	.unknown-word {
 			padding-left: 5px;
+	}
+	.reset-button {
+		padding-left: 5px;
 	}
 </style>
